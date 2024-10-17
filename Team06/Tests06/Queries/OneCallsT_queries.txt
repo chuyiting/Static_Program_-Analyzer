@@ -1,0 +1,65 @@
+1 - CallsT(synonym, synonym)
+procedure p1, p2;
+Select <p1, p2> such that Calls*(p1, p2)
+First Second, First Third, Second Third
+5000
+2 - CallsT(wildcard, synonym)
+procedure p;
+Select p such that Calls*(_, p)
+Second, Third
+5000
+3 - CallsT(string, synonym)
+procedure p;
+Select p such that Calls*("First", p)
+Second, Third
+5000
+4 - CallsT(synonym, wildcard)
+procedure p;
+Select p such that Calls*(p, _)
+First, Second
+5000
+5 - CallsT(wildcard, wildcard)
+
+Select BOOLEAN such that Calls*(_, _)
+TRUE
+5000
+6 - CallsT(string, wildcard)
+
+Select BOOLEAN such that Calls*("First", _)
+TRUE
+5000
+7 - CallsT(synonym, string)
+procedure p;
+Select p such that Calls*(p, "Third")
+First, Second
+5000
+8 - CallsT(wildcard, string)
+
+Select BOOLEAN such that Calls*(_, "Third")
+TRUE
+5000
+9 - CallsT(string, string)
+
+Select BOOLEAN such that Calls*("First", "Third")
+TRUE
+5000
+10 - CallsT(non_proc_synonym,proc_synonym)
+variable v; procedure p;
+Select p such that Calls*(p,v)
+SemanticError
+5000
+11 - CallsT(proc_synonym,non_proc_synonym)
+variable v; procedure p;
+Select p such that Calls*(v,p)
+SemanticError
+5000
+12 - CallsT(integer,proc_syn)
+procedure p;
+Select p such that Calls*(1,p)
+SemanticError
+5000
+13 - CallsT(proc_syn,integer)
+procedure p;
+Select p such that Calls*(p,1)
+SemanticError
+5000

@@ -1,0 +1,45 @@
+1 - one such that and then pattern, two variables
+assign a; variable v;
+Select a such that Uses (a, v) pattern a (v, _)
+5, 9, 11, 12
+5000
+2 - one pattern and then such that, two variables
+assign a; variable v;
+Select a pattern a (v, _) such that Uses (a, v)
+5, 9, 11, 12
+5000
+3 - one such that and then pattern, one variable
+assign a;
+Select a such that Uses(a,"x") pattern a ("west", _)
+5, 12
+5000
+4 - one such that clause always false with pattern
+assign a;
+Select a such that Parent(1,2) pattern a(_,_)
+none
+5000
+5 - one such that clause always true with pattern
+assign a;
+Select a such that Parent(6,7) pattern a("y",_"east"_)
+3, 11
+5000
+6 - Parent(wildcard, synonym) + pattern(synonym, partial match)
+assign a, a1; variable v;
+Select a such that Parent(_, a) pattern a(v, _"z"_)
+7, 10, 11
+5000
+7 - Follow*(wildcard, synonym) + pattern(synonym, partial match)
+assign a; variable v;
+Select a such that Follows*(_, a) pattern a(v, _"z"_)
+10, 12, 5
+5000
+8 - Trailing space in expression spec
+assign a; variable v;
+Select a such that Follows*(_, a) pattern a(v, _"z    "_)
+10, 12, 5
+5000
+9 - Follow*(wildcard, synonym) + pattern(synonym, invalid)
+assign a; variable v;
+Select a such that Follows*(_, a) pattern a(v, _"+z "_)
+SyntaxError
+5000

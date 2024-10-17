@@ -1,0 +1,11 @@
+procedure test {
+	read x;
+	while (a == 1) {
+		b = 2;
+		while (c == 3) {
+			d = a + b;
+			e = a;
+			c = 3;
+		}
+	}
+}

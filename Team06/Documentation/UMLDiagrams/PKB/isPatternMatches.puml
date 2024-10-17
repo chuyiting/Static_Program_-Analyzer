@@ -1,0 +1,48 @@
+@startuml
+-> PKBGetter : isPatternMatches(const Statement &s, const StmtType &st, Expression &lhs, Expression &rhs)
+activate PKBGetter
+
+PKBGetter -> IfPatternResolver : resetStatement(s)
+activate IfPatternResolver
+IfPatternResolver --> PKBGetter
+deactivate IfPatternResolver
+
+PKBGetter -> IfPatternResolver : resetState(lhs, "_")
+activate IfPatternResolver
+IfPatternResolver --> PKBGetter
+deactivate IfPatternResolver
+
+PKBGetter -> IfPatternResolver : run()
+activate IfPatternResolver
+
+IfPatternResolver -> IfPatternResolver : assignStrategy()
+activate IfPatternResolver
+IfPatternResolver --> IfPatternResolver
+deactivate IfPatternResolver
+
+alt _lhs_type == ArgumentType::CONCRETE_ENTITY_REF
+        IfPatternResolver -> IfPatternResolver : isDirectIf()
+activate IfPatternResolver
+IfPatternResolver -> PatternStorage : isDirectIf(_lhs_value, _statement)
+activate PatternStorage
+PatternStorage --> IfPatternResolver : bool
+deactivate PatternStorage
+IfPatternResolver --> IfPatternResolver
+        deactivate IfPatternResolver
+
+else _lhs_type == ArgumentType::WILDCARD
+        IfPatternResolver -> IfPatternResolver : isAnyIf()
+activate IfPatternResolver
+IfPatternResolver -> PatternStorage : isAnyIf(_statement)
+activate PatternStorage
+PatternStorage --> IfPatternResolver : bool
+deactivate PatternStorage
+IfPatternResolver --> IfPatternResolver
+        deactivate IfPatternResolver
+end
+
+IfPatternResolver --> PKBGetter : bool
+deactivate IfPatternResolver
+<-- PKBGetter : bool
+ deactivate PKBGetter
+@enduml

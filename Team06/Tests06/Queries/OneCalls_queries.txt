@@ -1,0 +1,65 @@
+1 - Calls(synonym, synonym)
+procedure p1, p2;
+Select p1.procName such that Calls(p1, p2)
+First, Second
+5000
+2 - Calls(wildcard, synonym)
+procedure p1;
+Select BOOLEAN such that Calls(_, p1)
+TRUE
+5000
+3 - Calls(string, synonym)
+procedure p1;
+Select p1.procName such that Calls("First", p1)
+Second
+5000
+4 - Calls(synonym, wildcard)
+procedure p1;
+Select p1.procName such that Calls(p1, _)
+First, Second
+5000
+5 - Calls(wildcard, wildcard)
+
+Select BOOLEAN such that Calls(_, _)
+TRUE
+5000
+6 - Calls(string, wildcard)
+
+Select BOOLEAN such that Calls("Second", _)
+TRUE
+5000
+7 - Calls(synonym, string)
+procedure p;
+Select p such that Calls(p, "Third")
+Second
+5000
+8 - Calls(wildcard, string)
+
+Select BOOLEAN such that Calls(_, "Second")
+TRUE
+5000
+9 - Calls(string, string)
+
+Select BOOLEAN such that Calls("Second", "Third")
+TRUE
+5000
+10 - Calls(non_proc_synonym,proc_synonym)
+variable v; procedure p;
+Select p such that Calls(p,v)
+SemanticError
+5000
+11 - Calls(proc_synonym,non_proc_synonym)
+variable v; procedure p;
+Select p such that Calls(v,p)
+SemanticError
+5000
+12 - Calls(integer,proc_syn)
+procedure p;
+Select p such that Calls(1,p)
+SemanticError
+5000
+13 - Calls(proc_syn,integer)
+procedure p;
+Select p such that Calls(p,1)
+SemanticError
+5000

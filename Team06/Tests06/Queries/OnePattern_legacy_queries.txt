@@ -1,0 +1,76 @@
+1 - Constant matching, no wildcards, one literal
+assign a; 
+Select a pattern a("east",_"9"_)
+10
+5000
+2 - Constant matching, one wildcard
+assign a;
+Select a pattern a(_,_"9"_)
+2, 5, 10, 12
+5000
+3 - Variable matching, no wildcards, one literal
+assign a; 
+Select a pattern a("west",_"x"_)
+5, 12
+5000
+4 - Variable matching, one wildcard
+assign a;
+Select a pattern a(_,_"y"_)
+5, 10, 11, 12
+5000
+5 - all wildcard
+assign a;
+Select a pattern a(_,_)
+2, 3, 4, 5, 7, 9, 10, 11, 12
+5000
+6 - two synonyms
+assign a; variable v;
+Select v pattern a(v,_"z"_)
+west, x, east, y
+5000
+7 - syn_assign not assign synonym
+stmt s;
+Select s pattern s ("a",_"x"_)
+SemanticError
+5000
+8 - Missing pattern
+variable v; assign a;
+Select v a (v,_"x"_)
+SyntaxError
+5000
+9 - Missing left wildcard
+variable v; assign a;
+Select v pattern a (v,"x"_)
+SyntaxError
+5000
+10 - Missing right wildcard
+variable v; assign a;
+Select v pattern a (v,_"x")
+SyntaxError
+5000
+11 - Missing left quote expression
+variable v; assign a;
+Select v pattern a (v,_x"_)
+SyntaxError
+5000
+12 - Missing right quote expression
+variable v; assign a;
+Select v pattern a (v,_"x_)
+SyntaxError
+5000
+13 - Missing left bracket
+assign a;
+Select a pattern a v,_"x"_)
+SyntaxError
+5000
+14 - Missing right bracket
+assign a;
+Select a pattern a ("a",_"x"_
+SyntaxError
+5000
+15 - Missing quote for literal variable
+assign a;
+Select a pattern a ("b,_"x"_)
+SyntaxError
+5000
+

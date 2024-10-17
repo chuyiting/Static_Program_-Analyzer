@@ -1,0 +1,7 @@
+procedure test {
+	a=1;
+	if (a==1) 
+	} else {
+		c=3;
+	}
+}

@@ -1,0 +1,45 @@
+1 - UsesS synonym (print), synonym (variable)
+print p; variable v;
+Select v such that Uses(p, v)
+east, west
+5000
+2 - UsesS integer, synonym (constant)
+constant c;
+Select c such that Uses(9, c)
+SemanticError
+5000
+3 - UsesS synonym (if), synonym (constant)
+if i; constant c;
+Select c such that Uses(i, c)
+SemanticError
+5000
+4 - UsesS synonym (print), string
+print p;
+Select p such that Uses(p, "west")
+13
+5000
+5 - UsesS integer, string
+read r;
+Select r such that Uses(3, "east")
+14
+5000
+6 - UsesS synonym (while), string
+while w;
+Select w such that Uses(w, "x")
+6
+5000
+7 - UsesS synonym (assign), wildcard
+assign a;
+Select a such that Uses(a, _)
+2, 3, 4, 5, 7, 9, 10, 11, 12
+5000
+8 - UsesS integer, wildcard
+print p;
+Select p such that Uses(3, _)
+1, 13
+5000
+9 - UsesS synonym (call), wildcard
+call c;
+Select c such that Uses(c, _)
+15, 16
+5000

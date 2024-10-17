@@ -1,0 +1,35 @@
+1 - Parent, two literals
+stmt s;
+Select s such that Parent(1,2)
+none
+5000
+2 - Parent, two synonyms
+stmt s; if f;
+Select s such that Parent(f,s)
+9, 10, 11
+5000
+3 - Parent, one literal one synonym 
+stmt s;
+Select s such that Parent(6,s)
+7, 8
+5000
+4 - Parent(wildcard, synonym)
+assign a, a1; variable v;
+Select a such that Parent(_, a)
+7, 9, 10, 11
+5000
+5 - Parent Wrong argument type, Two synonyms
+stmt s; variable v;
+Select s such that Parent(s,v)
+SemanticError
+5000
+6 - Parent Wrong argument type, One literal one synonym
+stmt s;
+Select s such that Parent(s,"a")
+SemanticError
+5000
+7 - Parent Wrong argument type, Two literals
+stmt s;
+Select s such that Parent(1,"a")
+SemanticError
+5000

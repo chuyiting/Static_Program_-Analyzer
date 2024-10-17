@@ -1,0 +1,81 @@
+@startuml
+activate QPS
+
+participant QPS
+participant QueryEvaluator
+participant QPSParser
+participant SuchThatClause
+participant UsesS
+participant QPSQueryParserAPI
+participant QPSQueryEvaluatorAPI
+participant QueryResult
+participant PKBGetter
+
+QPS -> QPSParser : parse(vector<QueryToken>)
+activate QPSParser
+
+QPSParser -> UsesS : make_shared<UsesS>(ref,ref)
+activate UsesS
+
+UsesS --> QPSParser
+deactivate UsesS
+
+QPSParser -> SuchThatClause : setRelationship(shared_ptr<UsesS>)
+activate SuchThatClause
+
+SuchThatClause --> QPSParser
+deactivate SuchThatClause
+
+QPSParser -> QPSQueryParserAPI : addSuchThatClause(suchThatClause)
+activate QPSQueryParserAPI
+
+QPSQueryParserAPI--> QPSParser
+deactivate QPSQueryParserAPI
+
+QPSParser --> QPS : shared_ptr<QPSQuery>
+deactivate QPSParser
+
+QPS -> QueryEvaluator : evaluate(shared_ptr<QPSQueryEvaluatorAPI>)
+activate QueryEvaluator
+
+QueryEvaluator -> QPSQueryEvaluatorAPI : getAllConstraints()
+activate QPSQueryEvaluatorAPI
+
+QPSQueryEvaluatorAPI --> QueryEvaluator : vector<shared_ptr<QPSConstraint>>
+deactivate QPSQueryEvaluatorAPI
+
+loop all possible synonym assignments
+    QueryEvaluator -> QueryEvaluator : findAnAssignment
+    activate QueryEvaluator
+    QueryEvaluator --> QueryEvaluator : assign_t
+    deactivate QueryEvaluator
+
+    QueryEvaluator -> SuchThatClause : isSatisfied(*pkb, assign_t)
+    activate SuchThatClause
+    SuchThatClause -> UsesS : isSatisfied(*pkb, assign_t)
+    activate UsesS
+    UsesS -> PKBGetter : isStatementUses(stmt, ent)
+    activate PKBGetter
+
+        alt
+            PKBGetter --> UsesS : true
+            UsesS --> SuchThatClause : true
+            SuchThatClause --> QueryEvaluator : true
+            QueryEvaluator -> QueryResult : addResult(SelectClause &, assign_t &)
+            activate QueryResult
+            QueryResult --> QueryEvaluator
+            deactivate QueryResult
+        else
+            PKBGetter --> UsesS : false
+            deactivate PKBGetter
+            UsesS --> SuchThatClause : false
+            deactivate UsesS
+            SuchThatClause --> QueryEvaluator : false
+            deactivate SuchThatClause
+        end
+end
+
+QueryEvaluator --> QPS : QueryResult
+deactivate QueryEvaluator
+
+@enduml

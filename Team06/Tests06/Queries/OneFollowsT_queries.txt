@@ -1,0 +1,80 @@
+1 - Follows* wildcard, wildcard
+call c;
+Select c such that Follows*(_ , _)
+15, 16
+5000
+2 - Follow* synonym, wildcard
+stmt s;
+Select s.stmt# such that Follows*(s, _)
+1, 2, 3, 4, 5, 6, 7, 9, 12, 13
+5000
+3 - Follow* integer, wildcard
+read r;
+Select r.varName such that Follows*(1, _)
+west
+5000
+4 - Follow* wildcard, synonym
+stmt s;
+Select s such that Follows*(_, s)
+2, 3, 4, 5, 6, 8, 10, 12, 13, 14
+5000
+5 - Follow* synonym, synonym
+stmt s; while w;
+Select <w, s> such that Follows*(w, s)
+6 12, 6 13, 6 14
+5000
+6 - Follow* integer, synonym
+stmt s;
+Select s such that Follows*(9, s)
+10
+5000
+7 - Follow* wildcard, integer
+call c;
+Select c such that Follows*(_, 2)
+15, 16
+5000
+8 - Follow* synonym, integer
+stmt s;
+Select s such that Follows*(s, 1)
+none
+5000
+9 - Follow* integer, integer
+stmt s;
+Select s such that Follows*(6, 7)
+none
+5000
+10 - Follows*, two literals - old
+print p;
+Select p such that Follows*(1,2)
+1, 13
+5000
+11 - Follows*, two synonyms - old
+if f; stmt s;
+Select f such that Follows*(f,s)
+none
+5000
+12 - Follows*, one literal one synonym - old
+print p;
+Select p such that Follows*(p,4)
+1
+5000
+13 - Follows*(stmt_syn,non_stmt_syn)
+stmt s; variable v;
+Select s such that Follows*(s,v)
+SemanticError
+5000
+14 - Follows*(non_stmt_syn,stmt_syn)
+stmt s; variable v;
+Select s such that Follows*(v,s)
+SemanticError
+5000
+15 -  Follows*(stmt_syn,string_literal)
+stmt s;
+Select s such that Follows*(s,"a")
+SemanticError
+5000
+16 - Follows*(string_literal,stmt_syn)
+stmt s;
+Select s such that Follows*("a",s)
+SemanticError
+5000

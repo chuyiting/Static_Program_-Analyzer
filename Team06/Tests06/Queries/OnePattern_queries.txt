@@ -1,0 +1,147 @@
+1 - pattern assign(variable, single string)
+assign a, a1, a2; variable v, v1;
+Select a.stmt# pattern a(v, _"west"_)
+4, 5, 15, 20, 27
+5000
+2 - pattern assign(string, single string)
+assign a, a1, a2; variable v, v1; while w;
+Select <a, w> pattern a("west", _"east"_)
+2 6, 2 13, 5 6, 5 13, 27 6, 27 13
+5000
+3 - pattern assign(wildcard, single string)
+assign a, a1, a2; variable v, v1; call c;
+Select a pattern a(_,  _"x"_)
+5, 23, 24, 25, 26, 27
+5000
+4 - pattern assign(variable, exact match)
+assign a; variable v;
+Select a pattern a(v, "east*x*y*z")
+26
+5000
+5 - pattern assign(string, exact match)
+assign a;
+Select BOOLEAN pattern a("east","z-9+(x*y)*z")
+TRUE
+5000
+6 - pattern assign(_,exact match)
+assign a;
+Select BOOLEAN pattern a(_,"x*y*z*west*east")
+FALSE
+5000
+7 - pattern assign(synonym, wildcard)
+assign a; variable v;
+Select <a, v> pattern a(v, _)
+2 west, 3 y, 4 z, 5 west, 7 x, 10 y, 11 z, 12 west, 15 west, 18 east, 20 west, 22 y, 23 x, 24 x, 25 east, 26 y, 27 west, 30 t920
+5000
+8 - pattern assign(string, wildcard)
+assign a, a1, a2; variable v, v1; call c;
+Select <c.procName, a> pattern a("west", _)
+Bedok 2, HollandVillage 2, Bedok 5, HollandVillage 5, Bedok 12, HollandVillage 12, Bedok 15, HollandVillage 15, Bedok 20, HollandVillage 20, Bedok 27, HollandVillage 27
+5000
+9 - pattern assign(wildcard, wildcard)
+assign a, a1, a2; variable v, v1; call c;
+Select a pattern a(_, _)
+2, 3, 4, 5, 7, 10, 11, 12, 15, 18, 20, 22, 23, 24, 25, 26, 27, 30
+5000
+10 - pattern assign(variable, single string)
+assign a, a1, a2; variable v, v1;
+Select a.stmt# pattern a(v, _"w9s"_)
+30
+5000
+11 - Synonym - Assign Synonym - Variable partial match (_x*y*z_) (To be numbered correctly later)
+assign a; variable v;
+Select a pattern a (v,_"x*y*z"_)
+5, 25, 27
+5000
+12 - Synonym - Assign Synonym - Variable partial match (_x*(y*z)_) NONE
+assign a; variable v;
+Select a pattern a (v,_"x*(y*z)"_)
+none
+5000
+13 - Synonym - Assign Synonym - string partial match (_x*(y*z)_)
+assign a; variable v;
+Select a pattern a ("east",_"x*y*z"_)
+25
+5000
+14 - Synonym - Assign Synonym - string partial match (_x*(y*z)_) NONE
+assign a; variable v;
+Select a pattern a ("east",_"x*(y*z)"_)
+none
+5000
+15 - Synonym - Assign Synonym - wildcard partial match (_x*y*z_)
+assign a; variable v;
+Select a pattern a (_,_"x*y*z"_)
+5, 25, 27
+5000
+16 - Synonym - Assign Synonym - wildcard partial match (_x*(y*z)_) NONE
+assign a; variable v;
+Select a pattern a (_, _"x*(y*z)"_)
+none
+5000
+17 - Synonym if - variable
+if ifs; variable v;
+Select v pattern ifs (v,_,_)
+east, x, newEast, z, y
+5000
+18 - Synonym if - variable (Returns None)
+if ifs; variable v;
+Select v such that Modifies(33,v) pattern ifs (v,_,_)
+none
+5000
+19 - Synonym - if - string
+if ifs; variable v;
+Select ifs pattern ifs ("x",_,_)
+8, 9
+5000
+20 - Synonym - if - synonym Constant (SemanticError)
+if ifs; constant c;
+Select ifs pattern ifs (c,_,_)
+SemanticError
+5000
+21 - Synonym - if - string (None)
+if ifs; variable v;
+Select ifs pattern ifs ("foo",_,_)
+none
+5000
+22 - Synonym - if - string Constant (SyntaxError)
+if ifs;
+Select ifs pattern ifs ("9",_,_)
+SyntaxError
+5000
+23 - Synonym - if - Wildcard
+if ifs;
+Select ifs pattern ifs (_,_,_)
+8, 9, 17
+5000
+24 - Synonym - while - Synonym Variable
+while w; variable v;
+Select w pattern w (v,_)
+6, 13
+5000
+25 - Synonym - while - Synonym Constant
+while w; constant c;
+Select w pattern w (c,_)
+SemanticError
+5000
+26 - Synonym - while - String
+while w;
+Select w pattern w ("east",_)
+6
+5000
+27 - Synonym - while - String
+while w;
+Select w pattern w ("0",_)
+SyntaxError
+5000
+28 - Synonym - while - String (None)
+while w; variable v;
+Select w pattern w ("foo",_)
+none
+5000
+29 - Synonym - while - Wildcard
+while w; variable v;
+Select w pattern w (_,_)
+6, 13
+5000
+
+

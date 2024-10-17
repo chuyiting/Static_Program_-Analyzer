@@ -1,0 +1,63 @@
+@startuml
+activate QPS
+participant QPS
+participant QPSParser
+participant SynonymDeclsParser
+participant SelectClauseParser
+participant ClauseParser
+participant SuchThatClauseParser
+participant RelationshipFactory
+participant QPSQueryParserAPI
+
+QPS -> QPSParser : parse(vector<QueryToken>)
+activate QPSParser
+
+QPSParser -> SynonymDeclsParser : tryParse(QPSQueryParserAPI* result, begin, end)
+activate SynonymDeclsParser
+SynonymDeclsParser -> QPSQueryParserAPI : addSynonymDecl(Synonym &synonymDecl)
+activate QPSQueryParserAPI
+QPSQueryParserAPI --> SynonymDeclsParser
+deactivate QPSQueryParserAPI
+SynonymDeclsParser --> QPSParser : TokenIterator (next)
+deactivate SynonymDeclsParser
+
+QPSParser -> SelectClauseParser : tryParse(QPSQueryParserAPI* result, begin, end)
+activate SelectClauseParser
+
+SelectClauseParser-> QPSQueryParserAPI :addSelectTarget(selectTarget);
+activate QPSQueryParserAPI
+QPSQueryParserAPI --> SelectClauseParser
+deactivate QPSQueryParserAPI
+
+SelectClauseParser --> QPSParser : TokenIterator (next)
+deactivate SelectClauseParser
+
+
+
+QPSParser -> ClauseParser : tryParse(QPSQueryParserAPI* result, begin, end)
+activate ClauseParser
+
+loop begin != end
+  ClauseParser -> SuchThatClauseParser : tryParse(QPSQueryParserAPI* result, begin, end)
+  activate SuchThatClauseParser
+  SuchThatClauseParser -> RelationshipFactory : createRelationship(QueryToken&, *RelRef, *RelRef);
+  activate RelationshipFactory
+  RelationshipFactory --> SuchThatClauseParser : shared_ptr<Relationship>
+  deactivate RelationshipFactory
+  SuchThatClauseParser -> QPSQueryParserAPI : addSuchThatClause(*clause)
+  activate QPSQueryParserAPI
+  QPSQueryParserAPI --> SuchThatClauseParser
+  deactivate QPSQueryParserAPI
+  SuchThatClauseParser --> ClauseParser : TokenIterator (next)
+  deactivate SuchThatClauseParser
+end
+
+ClauseParser --> QPSParser : TokenIterator (next)
+deactivate ClauseParser
+
+
+QPSParser --> QPS : shared_ptr<QPSQueryParserAPI>
+deactivate QPSParser
+
+
+@enduml

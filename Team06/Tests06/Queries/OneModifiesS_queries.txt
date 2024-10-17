@@ -1,0 +1,85 @@
+1 - Modifies read, variable
+read r; variable v;
+Select r such that Modifies(r, v)
+14
+5000
+2 - Modifies assign, variable
+variable v; assign a;
+Select a such that Modifies(a, v)
+2, 3, 4, 5, 7, 9, 10, 11, 12
+5000
+3 - Modifies integer, variable
+variable v;
+Select v such that Modifies(2, v)
+west
+5000
+4 - Modifies while, variable
+while w; variable v;
+Select w such that Modifies(w, v)
+6
+5000
+5 - Modifies if, variable
+if i; variable v;
+Select v such that Modifies(i, v)
+x, east, y
+5000
+6 - Modifies call, variable
+call c; variable v;
+Select c such that Modifies(c, v)
+15, 16
+5000
+7 - Modifies read, string
+read r;
+Select r such that Modifies(r, "west")
+14
+5000
+8 - Modifies assign, string
+assign a;
+Select a such that Modifies(a, "west")
+2, 5, 12
+5000
+9 - Modifies integer, string
+procedure p;
+Select p such that Modifies(2, "west")
+Bedok, HollandVillage, KentRidge
+5000
+10 - Modifies integer, string
+variable v;
+Select v such that Modifies(4, "east")
+none
+5000
+11 - Modifies call, string
+call c;
+Select c such that Modifies(c, "west")
+15, 16
+5000
+12 - Modifies while, string
+while w;
+Select w such that Modifies(w, "west")
+none
+5000
+13 - Modifies read, wildcard
+read r;
+Select r such that Modifies(r, _)
+14
+5000
+14 - Modifies assign, wildcard
+assign a;
+Select a such that Modifies(a, _)
+2, 3, 4, 5, 7, 9, 10, 11, 12
+5000
+15 - Modifies integer, wildcard
+variable v;
+Select v such that Modifies(2, _)
+west, east, x, y, z
+5000
+16 - Modifies call, wildcard
+call c;
+Select c such that Modifies(c, _)
+15, 16
+5000
+17 - Modifies while, wildcard
+while w;
+Select w such that Modifies(w, _)
+6
+5000

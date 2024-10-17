@@ -1,0 +1,91 @@
+@startuml
+hide attribute
+show EntEntRelationship attribute
+
+class EntEntRelationship {
+EntRef lhs;
+EntRef rhs;
+bool queryDomain(PKBGetter *pkb, assign_t &assign,
+orderDomain_t &orderDomain, orderDomain_t &queryResult)
+}
+
+class StmtEntRelationship {
+StmtRef lhs;
+EntRef rhs;
+bool queryDomain(PKBGetter *pkb, assign_t &assign,
+orderDomain_t &orderDomain, orderDomain_t &queryResult)
+}
+
+class Relationship {
+bool isSatisfied(PKBGetter* pkb,
+                           assign_t &assign);
+
+bool queryDomain(PKBGetter *pkb, assign_t &assign,
+                           orderDomain_t &orderDomain,
+                           orderDomain_t &queryResult);
+
+bool queryLeftDomain(PKBGetter *pkb, string rhs,
+                               domain_t &result);
+
+bool queryRightDomain(PKBGetter *pkb, string lhs,
+                                domain_t &result);
+
+bool isSatisfiedConcrete(PKBGetter *pkb,
+                                   string lhs, string rhs);
+}
+
+class UsesP {
+bool queryLeftDomain(PKBGetter *pkb, string rhs,
+                               domain_t &result);
+
+bool queryRightDomain(PKBGetter *pkb, string lhs,
+                                domain_t &result);
+
+bool isSatisfiedConcrete(PKBGetter *pkb,
+                                   string lhs, string rhs);
+}
+
+class ModifiesP {
+bool queryLeftDomain(PKBGetter *pkb, string rhs,
+                               domain_t &result);
+
+bool queryRightDomain(PKBGetter *pkb, string lhs,
+                                domain_t &result);
+
+bool isSatisfiedConcrete(PKBGetter *pkb,
+                                   string lhs, string rhs);
+}
+
+class UsesS {
+bool queryLeftDomain(PKBGetter *pkb, string rhs,
+                               domain_t &result);
+
+bool queryRightDomain(PKBGetter *pkb, string lhs,
+                                domain_t &result);
+
+bool isSatisfiedConcrete(PKBGetter *pkb,
+                                   string lhs, string rhs);
+}
+
+class ModifiesS {
+bool queryLeftDomain(PKBGetter *pkb, string rhs,
+                               domain_t &result);
+
+bool queryRightDomain(PKBGetter *pkb, string lhs,
+                                domain_t &result);
+
+bool isSatisfiedConcrete(PKBGetter *pkb,
+                                   string lhs, string rhs);
+}
+
+
+EntEntRelationship -up-|> Relationship
+StmtEntRelationship -up-|> Relationship
+
+UsesP -up-|> EntEntRelationship
+ModifiesP -up-|> EntEntRelationship
+
+UsesS -up-|> StmtEntRelationship
+ModifiesS -up-|> StmtEntRelationship
+
+@enduml

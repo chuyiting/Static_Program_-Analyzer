@@ -1,0 +1,40 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+hide circle
+hide method
+hide attribute
+
+skinparam class {
+    BackgroundColor #F5F2EE
+    ArrowColor #a6a6a6
+    BorderColor #000000
+}
+
+show PipelineComponent  method
+interface PipelineComponent {
++ O process(I input);
+}
+
+show Parser method
+show Parser attribute
+class Parser {
+- TokenStream tokenStream
+- int curLineNo
+
++ process(TokenStream) : SourceProgram
+- expectProgram() : SourceProgram
+- expectProcedure() : SPProcedure
+- expectStmt() : SPStatement
+- expectExpression() : SPExpression
+
+}
+
+
+Parser -|> PipelineComponent
+
+
+
+
+
+@enduml

@@ -1,0 +1,65 @@
+1 - Next(synonym, synonym)
+stmt s1, s2;
+Select <s1, s2> such that Next(s1, s2)
+1 2, 2 3, 3 4, 4 5, 5 6, 6 3, 3 7, 7 8, 7 9, 8 10, 9 10, 10 11, 11 12
+5000
+2 - Next(integer, synonym)
+stmt s;
+Select s such that Next(7, s)
+8, 9
+5000
+3 - Next(wildcard, synonym)
+stmt s;
+Select s such that Next(_, s)
+2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12
+5000
+4 - Next(synonym, integer)
+stmt s;
+Select s such that Next(s, 3)
+2, 6
+5000
+5 - Next(integer, integer)
+
+Select BOOLEAN such that Next(8, 10)
+TRUE
+5000
+6 - Next(wildcard, integer)
+
+Select BOOLEAN such that Next(_, 3)
+TRUE
+5000
+7 - Next(synonym, wildcard)
+stmt s;
+Select s such that Next(s, _)
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+5000
+8 - Next(integer, wildcard)
+
+Select BOOLEAN such that Next(7, _)
+TRUE
+5000
+9 - Next(wildcard, wildcard)
+
+Select BOOLEAN such that Next(_, _)
+TRUE
+5000
+10 - Next(stmt_syn,non_stmt_syn)
+stmt s; variable v;
+Select s such that Next(s,v)
+SemanticError
+5000
+11 - Next(non_stmt_syn,stmt_syn)
+stmt s; variable v;
+Select s such that Next(v,s)
+SemanticError
+5000
+12 - Next(stmt_syn,string_literal)
+stmt s;
+Select s such that Next(s,"a")
+SemanticError
+5000
+13 - Next(string_literal,stmt_syn)
+stmt s;
+Select s such that Next("a",s)
+SemanticError
+5000

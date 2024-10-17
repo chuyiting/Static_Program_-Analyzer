@@ -1,0 +1,90 @@
+1 - Get prints
+print p;
+Select p
+1, 13
+5000
+2 - Get reads
+read r;
+Select r
+14
+5000
+3 - Get ifs
+if f;
+Select f
+8
+5000
+4 - Get whiles
+while w;
+Select w
+6
+5000
+5 - Get stmts
+stmt s;
+Select s
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10 ,11 , 12, 13, 14, 15, 16
+5000
+6 - Get assigns
+assign a;
+Select a
+2, 3, 4, 5, 7, 9, 10, 11, 12
+5000
+7 - Get variables
+variable v;
+Select v
+east, west, y, z, x
+5000
+8 - Get constants
+constant c;
+Select c
+9, 4, 2, 0, 1
+5000
+9 - varName same as keyword
+read read;
+Select read
+14
+5000
+10 - Get calls 
+call c;
+Select c
+15, 16
+5000
+11 - Get prints varName
+print p;
+Select p.varName
+east, west
+5000
+12 - Get reads varName
+read r;
+Select r.varName
+west
+5000
+13 - Get calls procName
+call c;
+Select c.procName
+Bedok, HollandVillage
+5000
+14 - Failure get calls varName
+call c;
+Select c.varName
+SyntaxError
+5000
+15 - Failure get prints procName
+print p;
+Select p.procName
+SyntaxError
+5000
+16 - Failure get reads procName
+read r;
+Select r.procName
+SyntaxError
+5000
+17 - No constraints for BOOLEAN
+
+Select BOOLEAN
+TRUE
+5000
+18 - BOOLEAN override
+print BOOLEAN;
+Select BOOLEAN
+1, 13
+5000

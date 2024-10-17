@@ -1,0 +1,24 @@
+@startuml
+-> QPS : run(query)
+activate QPS
+QPS -> QueryTokenizer : tokenize(queryString)
+activate QueryTokenizer
+
+QueryTokenizer --> QPS : vector<QueryToken>
+deactivate QueryTokenizer
+
+QPS -> QPSParser : parse(vector<QueryToken>)
+activate QPSParser
+
+QPSParser --> QPS : shared_ptr<QPSQuery>
+deactivate QPSParser
+
+QPS -> QueryEvaluator : evaluate(shared_ptr<QPSQueryEvaluatorAPI>)
+activate QueryEvaluator
+
+QueryEvaluator --> QPS : QPSResult
+deactivate QueryEvaluator
+<-- QPS : QueryResult*
+deactivate QPS
+
+@enduml

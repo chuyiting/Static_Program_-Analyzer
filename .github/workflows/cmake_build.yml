@@ -1,0 +1,111 @@
+name: CI pipeline for spa project
+
+on:
+  push:
+    branches: [ master, pkb-dev, qps-dev, sp-dev ]
+    paths:
+      - "Team06/Code06/src/**"
+  pull_request:
+    branches: [ master, pkb-dev, qps-dev, sp-dev ]
+    paths:
+      - "Team06/Code06/src/**"
+# If you are doing triggering your workflow from pushes or merging more than twice a day on average,
+# please execute your workflow on a schedule instead.
+# Comment the above 7 lines, and uncomment the following 3 lines
+# on:
+#   schedule:
+#     - cron: "0 09,23 * * *"
+
+env:
+  BUILD_TYPE: Release
+  CMAKE_BUILD_PARALLEL_LEVEL: 6
+
+jobs:
+  cpplint:
+    name: Static Analysis
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          fetch-depth: 2
+      - uses: actions/setup-python@v2
+      - run: python -m pip install cpplint
+      - run: git remote set-url origin https://x-access-token:${{ secrets.GITHUB_TOKEN }}@github.com/$GITHUB_REPOSITORY
+      - run: git diff HEAD~1 --diff-filter=A --name-only > git_diff.txt
+      - name: cpplint_new_files
+        shell: python
+        run: |
+          import os
+          import subprocess
+          import sys
+          print("Python {}.{}.{}".format(*sys.version_info))  # Python 3.8
+          with open("git_diff.txt") as in_file:
+            new_files = sorted(in_file.read().splitlines())
+          print("{} files were newly added.".format(len(new_files)))
+          cpp_exts = tuple(".c .c++ .cc .cpp .cu .cuh .cxx .h .h++ .hh .hpp .hxx".split())
+          cpp_files = [file for file in new_files if file.lower().endswith(cpp_exts)]
+          print(f"{len(cpp_files)} C++ files were added.")
+          if not cpp_files:
+            sys.exit(0)
+          print("cpplint:")
+          subprocess.run(["cpplint", "--filter=-legal/copyright"] + cpp_files, check=True, text=True)
+
+  build:
+    name: CMake
+    if: ${{ needs.dup_check.outputs.should_skip != 'true' }}
+    strategy:
+      fail-fast: true
+      matrix:
+        os: [ macos-latest ]
+    runs-on: ${{matrix.os }}
+    timeout-minutes: 20
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-python@v4
+        with:
+          python-version: '3.x'
+
+      - name: Create Build Environment
+        run: cmake -E make_directory ${{ runner.temp }}/build
+
+      - name: Configure CMake
+        shell: bash
+        working-directory: ${{ runner.temp }}/build
+        run: cmake $GITHUB_WORKSPACE/Team06/Code06/ -DCMAKE_BUILD_TYPE=$BUILD_TYPE
+
+      - name: Build Project
+        working-directory: ${{ runner.temp }}/build
+        shell: bash
+        run: cmake --build . --config $BUILD_TYPE
+
+      - name: Run unit tests
+        working-directory: Team06/Tests06
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+              $RUNNER_TEMP/build/src/unit_testing/$BUILD_TYPE/unit_testing.exe
+          else
+              $RUNNER_TEMP/build/src/unit_testing/unit_testing
+          fi
+      - name: Run integration tests
+        working-directory: Team06/Tests06
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+              $RUNNER_TEMP/build/src/integration_testing/$BUILD_TYPE/integration_testing.exe
+          else
+              $RUNNER_TEMP/build/src/integration_testing/integration_testing
+          fi
+      - name: Run system tests
+        working-directory: Team06/Tests06
+        shell: bash
+        run: |
+          if [ "$RUNNER_OS" == "Windows" ]; then
+              pwd
+              python $RUNNER_TEMP\\build\\src\\autotester\\$BUILD_TYPE\\Tests06\\run_all_tests.py ci
+          else
+              pwd
+              python $RUNNER_TEMP/build/src/autotester/Tests06/run_all_tests.py ci
+          fi
+      

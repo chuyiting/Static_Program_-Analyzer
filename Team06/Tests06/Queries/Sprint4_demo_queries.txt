@@ -1,0 +1,61 @@
+1 - Multiple Such That Clauses - Uses + Modifies
+assign a; variable v;
+Select a such that Uses (a, v) such that Modifies(a, "x")
+7, 9
+5000
+2 - And Feature for Such That Clause
+assign a; variable v;
+Select a such that Uses (a, v) and Modifies(a, "x")
+7, 9
+5000
+3 - If Pattern Clauses
+if f;
+Select f pattern f("east", _,_)
+8
+5000
+4 - While Pattern Clauses
+while w;
+Select w pattern w("east", _)
+6
+5000
+5 - Multiple pattern Clauses
+if f;
+Select f pattern f("east", _,_) pattern f("x",_,_)
+8
+5000
+6 - And Feature for Multiple pattern Clauses
+if f;
+Select f pattern f("east", _,_) and f("x",_,_)
+8
+5000
+7 - Multiple Pattern Clauses - Mixed If/While/Assign
+if f; while w; variable v;
+Select v  pattern f(v, _,   _) and w(   v,  _)
+east
+5000
+8 - ModifiesP - Single Such That Clause
+procedure p; variable v;
+Select p such that Modifies(p, v)
+Bedok, HollandVillage, KentRidge
+5000
+9 - UsesP - Single Such That Clause
+procedure p;
+Select p such that Uses(p, "x")
+Bedok, HollandVillage, KentRidge
+5000
+10 - Complicated Expression partial match
+assign a;
+Select a pattern a(_,_"x*y*z"_)
+5, 10, 12
+5000
+11 - Calls - Single Such That Clause
+procedure p;
+Select p such that Calls(p, "Bedok")
+HollandVillage
+5000
+12 - Calls* - Single Such That Clause
+procedure p;
+Select p such that Calls*(p, "Bedok")
+HollandVillage, KentRidge
+5000
+

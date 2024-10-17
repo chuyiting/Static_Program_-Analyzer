@@ -1,0 +1,9 @@
+procedure test {
+	read x;
+	print x;
+	a = 1;
+	b = 2;
+	c = 3;
+	d = a + b;
+	e = a;
+}

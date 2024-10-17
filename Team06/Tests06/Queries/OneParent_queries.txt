@@ -1,0 +1,45 @@
+1 - Parent wildcard wildcard
+if ifz;
+Select ifz such that Parent(_ , _)
+8, 9, 17
+5000
+2 - Parent syonym wildcard
+while w; print p;
+Select <w, p> such that Parent(w , _)
+6 1, 6 14, 6 19, 6 21, 6 28, 13 1, 13 14, 13 19, 13 21, 13 28
+5000
+3 - Parent integer wildcard
+while w; print p;
+Select <w, p> such that Parent(20 , _)
+none
+5000
+4 - Parent wildcard synonym
+print p;
+Select p such that Parent(_ , p)
+14, 19, 21
+5000
+5 - Parent synonym synonym
+if if1, if2;
+Select <if1, if2> such that Parent(if1 , if2)
+8 9
+5000
+6 - Parent integer synonym
+assign a;
+Select a such that Parent(13 , a)
+15
+5000
+7 - Parent wildcard integer
+while w;
+Select w such that Parent(_ , 16)
+6, 13
+5000
+8 - Parent synonym integer
+if ifz; constant c;
+Select <ifz, c> such that Parent(ifz , 16)
+none
+5000
+9 - Parent integer integer
+assign a; constant c;
+Select BOOLEAN such that Parent(8 , 18)
+FALSE
+5000

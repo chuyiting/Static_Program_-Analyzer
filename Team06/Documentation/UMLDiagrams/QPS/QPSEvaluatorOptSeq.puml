@@ -1,0 +1,65 @@
+@startuml
+
+participant QueryEvaluator
+
+
+activate QueryEvaluator
+QueryEvaluator -> QueryEvaluator : backtrackingSearch
+activate QueryEvaluator
+
+QueryEvaluator -> QueryEvaluator : pickUnassignedVariable(assign)
+activate QueryEvaluator
+
+QueryEvaluator --> QueryEvaluator : var
+deactivate QueryEvaluator
+
+loop all constraints containing var
+    QueryEvaluator -> QPSConstraint : queryDomain(pkb, assign, orderDomain, queryDomain)
+    activate QPSConstraint
+
+    alt optimization function (query domain) exists for this constraint
+        QPSConstraint --> QueryEvaluator : true
+        QueryEvaluator -> CSPUtils : intersectOrderDomains(orderDomain, queryDomain)
+        activate CSPUtils
+        CSPUtils --> QueryEvaluator
+        deactivate CSPUtils
+    else
+        QPSConstraint --> QueryEvaluator : false
+        deactivate QPSConstraint
+    end
+
+end
+
+alt all constraints for var are satisfied
+    QueryEvaluator -> QueryEvaluator : backtrackingSearch
+
+else
+    loop all possible values for var
+
+        QueryEvaluator -> SuchThatClause : isSatisfied(*pkb, assign_t)
+        activate SuchThatClause
+        SuchThatClause -> UsesS : isSatisfied(*pkb, assign_t)
+        activate UsesS
+        UsesS -> PKBGetter : isStatementUses(stmt, ent)
+        activate PKBGetter
+
+            alt
+                PKBGetter --> UsesS : true
+                UsesS --> SuchThatClause : true
+                SuchThatClause --> QueryEvaluator : true
+                QueryEvaluator -> QueryEvaluator : backtrackingSearch
+            else
+                PKBGetter --> UsesS : false
+                deactivate PKBGetter
+                UsesS --> SuchThatClause : false
+                deactivate UsesS
+                SuchThatClause --> QueryEvaluator : false
+                deactivate SuchThatClause
+                QueryEvaluator --> QueryEvaluator : false
+                deactivate QueryEvaluator
+            end
+    end
+end
+
+
+@enduml

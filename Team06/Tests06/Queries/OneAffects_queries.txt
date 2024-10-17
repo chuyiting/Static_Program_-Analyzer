@@ -1,0 +1,60 @@
+1 - Affects(stmt_syn, stmt_syn)
+stmt s1; stmt s2;
+Select <s1,s2> such that Affects(s1,s2)
+1 4, 1 8, 1 10, 1 12, 2 6, 2 10, 4 4, 4 8, 4 10, 4 12, 6 6, 6 10, 8 10, 8 12, 9 10, 10 11, 10 12, 11 12, 13 14
+5000
+2 - Affects(literal, stmt_syn)
+stmt s;
+Select s such that Affects(1,s)
+4, 8, 10, 12
+5000
+3 - Affects(_,assign_syn)
+assign a;
+Select a such that Affects(_,a)
+4, 6, 8, 10, 11, 12, 14
+5000
+4 - Affects(stmt_syn,literal)
+stmt s;
+Select s such that Affects(s,10)
+1, 2, 4, 6, 8, 9
+5000
+5 - Affects(literal,literal)
+procedure p;
+Select p such that Affects(1,8)
+Second, Third
+5000
+6 - Affects(_,literal)
+print p;
+Select p such that Affects(_,3)
+none
+5000
+7 - Affects(assign_syn,_)
+assign a;
+Select a such that Affects(a,_)
+1, 2, 4, 6, 8, 9, 10, 11, 13
+5000
+8 - Affects(literal, wildcard)
+print p;
+Select p such that Affects(1,_)
+15
+5000
+9 - Affects(_,_)
+while w;
+Select w such that Affects(_,_)
+3
+5000
+10 - Affects(non-assign_syn,non-assign_syn)
+while w; if f;
+Select w such that Affects(w,f)
+none
+5000
+11 - Affects(assign_syn,non-assign_syn)
+assign a; while w;
+Select a such that Affects(a,w)
+none
+5000
+12 - Affects(non-assign_syn,assign_syn)
+assign a; while w;
+Select a such that Affects(w,a)
+none
+5000

@@ -1,0 +1,77 @@
+@startuml
+
+
+skinparam classAttributeIconSize 0
+
+hide attribute
+hide circle
+
+skinparam class {
+    BackgroundColor #F5F2EE
+    ArrowColor #a6a6a6
+    BorderColor #000000
+}
+
+class QueryTokenizer {
+     vector<QueryToken> tokenize(string queryString);
+}
+
+show QueryToken attribute
+hide QueryToken method
+class QueryToken {
++ string value;
++ TokenType type;
+}
+
+class QPSParser {
+    shared_ptr<QPSQuery> parse(vector<QueryToken> &tokens);
+}
+
+show QueryEvaluator attribute
+class QueryEvaluator {
+- shared_ptr<PKBGetter> pkb;
+shared_ptr<QueryResult> evaluate(shared_ptr<QPSQueryEvaluatorAPI> query);
+}
+
+show QPSQuery attribute
+class QPSQuery {
+- unordered_map<synonym_t, Synonym> synonymDecls
+- vector<shared_ptr<SuchThatClause>> stcs
+- vector<shared_ptr<PatternClause>> pcs
+- vector<shared_ptr<AttrCompare>> acs
+- SelectClause selectClause;
+}
+
+class QPSQueryParserAPI {
+    void addSynonymDecl(Synonym &synonymDecl);
+    void addSuchThatClause(shared_ptr<SuchThatClause> clause);
+    void addPatternClause(shared_ptr<PatternClause> clause);
+    void addAttrCompare(shared_ptr<AttrCompare> attrCompare);
+    void addSelectTarget(SelectTarget selectTarget);
+    bool isSynonymDefined(const synonym_t &synonym) const;
+    shared_ptr<Synonym> getSynonymFromLiteral(string literal) const;
+}
+
+class QPSQueryEvaluatorAPI {
+    vector<shared_ptr<QPSConstraint>> getAllConstraints() const;
+    EntityType getType(const synonym_t &synonym) const;
+    QueryResultType getQueryResultType() const;
+    bool isVarSelected(synonym_t var);
+    const unordered_set<synonym_t> &extractSelectedSynonyms() const;
+    const SelectClause &getSelectClause() const;
+}
+
+QueryTokenizer .right.> QueryToken
+QPSParser .right.> QueryToken
+QPSParser ..> QPSQueryParserAPI
+QueryEvaluator ..> QPSQueryEvaluatorAPI
+QPSQuery -up|> QPSQueryParserAPI
+QPSQuery -up|> QPSQueryEvaluatorAPI
+
+QueryTokenizer .down[hidden].> QPSParser
+QPSParser .down[hidden].> QueryEvaluator
+
+
+
+
+@enduml

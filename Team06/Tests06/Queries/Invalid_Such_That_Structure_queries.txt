@@ -1,0 +1,40 @@
+1 - Missing such
+variable v;
+Select v that Modifies(1,v)
+SyntaxError
+5000
+2 - Missing that
+variable v;
+Select v such Modifies(1,v)
+SyntaxError
+5000
+3 - Missing such that
+variable v;
+Select v Modifies(1,v)
+SyntaxError
+5000
+4 - Missing Parenthesis
+variable v;
+Select v such that Modifies(1,v
+SyntaxError
+5000
+5 - Unknown Relationship
+variable v;
+Select v such that modifies(1,v)
+SyntaxError
+5000
+6 - Missing left quotes for literal
+stmt s;
+Select s such that Uses(a",s)
+SyntaxError 
+5000
+6 - Missing right quotes for literal
+stmt s;
+Select s such that Uses("a,s)
+SyntaxError 
+5000
+7 - Using undeclared synonym in relationship
+variable v;
+Select v such that Uses(s,v)
+SyntaxError
+5000

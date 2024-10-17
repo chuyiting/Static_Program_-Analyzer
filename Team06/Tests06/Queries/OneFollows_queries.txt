@@ -1,0 +1,70 @@
+1 - Follows wildcard, wildcard
+read r;
+Select r such that Follows(_, _)
+14
+5000
+2 - Follows synonym, wildcard
+assign a;
+Select a such that Follows(a, _)
+2, 3, 4, 5, 7, 9, 12
+5000
+3 - Follows integer, wildcard
+stmt s;
+Select s such that Follows(9, _)
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
+5000
+4 - Follows wildcard, synonym
+print p;
+Select p such that Follows(_, p)
+13
+5000
+5 - Follows synonym, synonym
+assign a; print p;
+Select a such that Follows(a, p)
+12
+5000
+6 - Follows integer, synonym
+read r;
+Select r such that Follows(13, r)
+14
+5000
+7 - Follows wildcard, integer
+print p;
+Select p such that Follows(3, _)
+1, 13
+5000
+8 - Follows synonym, integer
+assign a;
+Select a such that Follows(a, 4)
+3
+5000
+9 - Follows integer, integer
+assign a;
+Select a such that Follows(2, 3)
+2, 3, 4, 5, 7, 9, 10, 11, 12
+5000
+10 - Follows(stmt_syn,non_stmt_syn)
+stmt s; variable v;
+Select s such that Follows(s,v)
+SemanticError
+5000
+11 - Follows(non_stmt_syn,stmt_syn)
+stmt s; variable v;
+Select s such that Follows(v,s)
+SemanticError
+5000
+12 -  Follows(stmt_syn,string_literal)
+stmt s;
+Select s such that Follows(s,"a")
+SemanticError
+5000
+13 - Follows(string_literal,stmt_syn)
+stmt s;
+Select s such that Follows("a",s)
+SemanticError
+5000
+14 - Follows(call_syn,s)
+call c;stmt s;
+Select s such that Follows(c,s)
+none
+5000

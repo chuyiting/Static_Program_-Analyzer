@@ -1,0 +1,32 @@
+@startuml
+
+skinparam classAttributeIconSize 0
+
+hide method
+hide attribute
+hide circle
+
+skinparam class {
+    BackgroundColor #F5F2EE
+    ArrowColor #a6a6a6
+    BorderColor #000000
+}
+
+show QPS method
+show QPS attribute
+class QPS {
+    - std::shared_ptr<PKBGetter> pkb;
+    + QPS(std::shared_ptr<PKBGetter> pkb);
+
+    + std::shared_ptr<QueryResult> run(std::string query)
+}
+
+
+
+
+
+
+
+
+
+@enduml

@@ -1,0 +1,15 @@
+1 - semicolon present in Select clause
+variable v;
+Select v;
+SyntaxError
+5000
+2 - Selecting undeclared synonym
+stmt s;
+Select v
+SemanticError
+5000
+3 - Lowercase s for Select
+variable v;
+select v
+SyntaxError
+5000

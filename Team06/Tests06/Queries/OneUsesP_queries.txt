@@ -1,0 +1,45 @@
+1 - UsesP synonym (procedure), synonym (constant)
+procedure p; constant c;
+Select p such that Uses(p, c)
+SemanticError
+5000
+2 - UsesP string, synonym (constant)
+constant c;
+Select c such that Uses("Bedok", c)
+SemanticError
+5000
+3 - UsesP(procedure, string)
+procedure p;
+Select p such that Uses(p, "east")
+Bedok, HollandVillage, KentRidge
+5000
+4 - UsesP(string, string)
+procedure p;
+Select p such that Uses("Bedok", "west")
+Bedok, HollandVillage, KentRidge
+5000
+5 - UsesP(string, string)
+procedure p;
+Select p such that Uses("InvalidProcName", "west")
+none
+5000
+6 - UsesP(string, string)
+procedure p;
+Select p such that Uses("Bedok", "NoSuchVar")
+none
+5000
+7 - UsesP(procedure, wildcard)
+procedure p;
+Select p such that Uses(p, _)
+Bedok, HollandVillage, KentRidge
+5000
+8 - UsesP(string, wildcard)
+procedure p;
+Select p such that Uses("Bedok", _)
+Bedok, HollandVillage, KentRidge
+5000
+9 - UsesP(string, wildcard)
+procedure p;
+Select p such that Uses("NoSuchProc", _)
+none
+5000

@@ -1,0 +1,40 @@
+1 - Assign Pattern + One With {variable_syn} {variable.varName} 
+assign a; variable v;
+Select a pattern a (v,"9+east") with v.varName = "west"
+2 
+5000
+2 - If Pattern + One With {variable_syn} {variable.varName} 
+if f; variable v;
+Select f pattern f (v,_,_) with v.varName = "east"
+8
+5000
+3 - While Pattern + One With {variable_syn} {variable.varName} 
+while w; variable v;
+Select w pattern w (v,_) with v.varName = "east"
+6
+5000
+4 - Assign Pattern + One With {variable_literal} {assign.stmt#} 
+assign a;
+Select BOOLEAN pattern a ("x",_"east"_) with a.stmt# = 7
+TRUE
+5000
+5 - If Pattern + One With {variable_literal} {if.stmt#} 
+if f;
+Select BOOLEAN pattern f ("x",_,_) with f.stmt# = 8
+TRUE
+5000
+6 - While Pattern + One With {variable_literal} {while.stmt#} 
+while w; variable v;
+Select BOOLEAN pattern w ("east",_) with w.stmt# = 6
+TRUE
+5000
+7 - Assign Pattern + One Always True With
+assign a; variable v;
+Select a pattern a (v,_"west"_) with "a" = "a"
+4, 5, 12
+5000
+8 - Assign Pattern + One Always False With
+assign a; variable v;
+Select a pattern a (v,_"west"_) with 1 = 2
+
+5000

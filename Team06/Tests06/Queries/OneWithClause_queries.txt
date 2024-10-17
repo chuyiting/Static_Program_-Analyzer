@@ -1,0 +1,80 @@
+1 - With const, const
+
+Select BOOLEAN with 12 = 12
+TRUE
+5000
+2 - With string to string
+
+Select BOOLEAN with "a4" = "a4"
+TRUE
+5000
+3 - With const, const
+
+Select BOOLEAN with 4 = 5
+FALSE
+5000
+4 - With string to const
+
+Select BOOLEAN with "4" = 4
+SemanticError
+5000
+5 - With string to const
+
+Select BOOLEAN with 4 = "4"
+SemanticError
+5000
+6 - With nameAttribute ref to const
+assign a;
+Select a with a.stmt# = 4
+4
+5000
+7  - With nameAttribute ref
+assign a;
+Select a with a.stmt# = 34
+none
+5000
+8 - { read }
+read r; variable v;
+Select r.varName with r.stmt# = 29
+west
+5000
+9 - { call }
+call c;
+Select c.procName with c.stmt# = 31
+Bedok
+5000
+10 - { print }
+print p;
+Select p.varName with p.stmt# = 28
+west
+5000
+11 - { while }
+while w; variable v;
+Select v.varName with w.stmt# = 13 such that Modifies(w, v)
+west, newEast, east, y
+5000
+12 - { stmt }
+stmt s; while w;
+Select s.stmt# with w.stmt# = s.stmt#
+6, 13
+5000
+13 - with { stmt, constant value }
+stmt s; constant c;
+Select s.stmt# with s.stmt# = c.value
+9, 4, 2, 1
+5000
+14 - with { print.varname, var.varName }
+variable v; print p;
+Select p.varName with v.varName = p.varName
+newEast, west, east
+5000
+15 - with { stmt#, constant.value }
+stmt s; constant c;
+Select s.stmt# with s.stmt# = c.value
+9, 4, 2, 1
+5000
+16 - with { procedure.procName, variable.value }
+procedure p; variable v;
+Select p.procName with p.procName = v.varName
+east
+5000

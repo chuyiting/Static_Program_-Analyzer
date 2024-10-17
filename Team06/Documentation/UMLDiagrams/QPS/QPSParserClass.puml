@@ -1,0 +1,42 @@
+@startuml
+
+
+skinparam classAttributeIconSize 0
+
+hide method
+hide attribute
+hide circle
+
+skinparam class {
+    BackgroundColor #F5F2EE
+    ArrowColor #a6a6a6
+    BorderColor #000000
+}
+
+show QPSParser method
+class QPSParser {
+shared_ptr<QPSQuery> parse(vector<QueryToken> &tokens);
+}
+
+show QPSAbstractParser method
+class QPSAbstractParser {
+TokenIterator tryParse(shared_ptr<QPSQueryParserAPI> result, TokenIterator begin, TokenIterator end)
+}
+
+SelectClauseParser -up|> QPSAbstractParser
+SynonymDeclsParser -up|> QPSAbstractParser
+ClauseParser -up|> QPSAbstractParser
+SuchThatClauseParser -up|> QPSAbstractParser
+PatternClauseParser -up|> QPSAbstractParser
+WithClauseParser -up|> QPSAbstractParser
+
+QPSParser .down.> SynonymDeclsParser
+QPSParser .down.> SelectClauseParser
+QPSParser .down.> ClauseParser
+
+ClauseParser -down-> SuchThatClauseParser
+ClauseParser -down-> PatternClauseParser
+ClauseParser -down-> WithClauseParser
+QPSParser .up[hidden].> QPSAbstractParser
+
+@enduml

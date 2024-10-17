@@ -1,0 +1,5 @@
+1 - comment
+variable v;
+Select v
+b
+5000

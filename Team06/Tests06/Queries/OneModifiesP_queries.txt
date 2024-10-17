@@ -1,0 +1,45 @@
+1 - Modifies procedure, variable
+procedure p; variable v;
+Select p such that Modifies(p, v)
+Bedok, HollandVillage, KentRidge
+5000
+2 - Modifies procedure, variable
+procedure p; variable v;
+Select v such that Modifies(p, v)
+east, west, x, y, z
+5000
+3 - Modifies string, variable
+variable v;
+Select v such that Modifies("Bedok", v)
+east, west, x, y, z
+5000
+4 - Modifies string, variable
+variable v;
+Select v such that Modifies("NoSuchProcName", v)
+none
+5000
+5 - Modifies procedure, string
+procedure p;
+Select p such that Modifies(p, "x")
+Bedok, HollandVillage, KentRidge
+5000
+6 - Modifies procedure, string
+procedure p;
+Select p such that Modifies(p, "NoSuchVarName")
+none
+5000
+7 - Modifies string, string
+read r;
+Select r such that Modifies("Bedok", "x")
+14
+5000
+8 - Modifies procedure, wildcard
+procedure p;
+Select p such that Modifies(p, _)
+Bedok, HollandVillage, KentRidge
+5000
+9 - Modifies string, wildcard
+variable v;
+Select v such that Modifies("Bedok", _)
+east, west, x, y, z
+5000

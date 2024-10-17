@@ -1,0 +1,6 @@
+procedure test {
+	call test1;
+}
+procedure test1 {
+	call test;
+}

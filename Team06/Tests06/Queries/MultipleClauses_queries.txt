@@ -1,0 +1,50 @@
+1 - 3 clauses, all connected
+variable v; assign a;
+Select <a,v> such that Modifies(a,v) and Uses(a,v) pattern a(v,_"x"_)
+12 west, 9 x, 5 west
+5000
+2 - 3 clauses, 2 separate groups
+variable v; assign a;
+Select < a,v > such that Modifies(a,"west") and Uses(11,v) with a.stmt#=5
+5 east, 5 y, 5 z
+5000
+3 - 3 clauses, all separated
+variable v; while w; procedure p;
+Select < v,w,p > such that Uses(7,v) and Modifies(w,"x") with p.procName="Bedok"
+z 6 Bedok, east 6 Bedok
+5000
+4 - 2 Patterns (and), 1 Such That
+assign a; while w;
+Select <a,w> such that Uses(a,"west") pattern a(_,"west+2") and w("east",_)
+4 6
+5000
+5 - 2 Such That, 1 Pattern
+variable v; if f;
+Select BOOLEAN such that Uses(f,v) and Modifies(f,v) pattern f("x",_,_)
+TRUE
+5000
+6 - 1 Pattern, 1 Such That, 1 With
+while w; stmt s,s1;
+Select <s,w> such that Follows(s,s1) pattern w("east",_) with s1.stmt#=6
+5 6
+5000
+7 - 2 With, 1 Such That
+assign a; variable v;
+Select <a,v> such that Uses(a,v) with a.stmt#=9 and v.varName="x"
+9 x
+5000
+8 - 2 Such That, 1 With
+assign a; variable v,v1;
+Select a such that Uses(a,v1) and Modifies(a,v) with v.varName=v1.varName
+5, 9, 11, 12
+5000
+9 - 2 Pattern, 1 With
+assign a; read r;
+Select <a,r> pattern a (_,_"east"_) and a(_,_"west"_) with r.varName="west"
+5 14, 12 14
+5000
+10 - 2 With, 1 Pattern
+variable v; print p; assign a;
+Select <v,p> with v.varName = p.varName and a.stmt#=2 pattern a(v,"9+east")
+west 13
+5000

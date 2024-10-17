@@ -1,0 +1,16 @@
+procedure Bedok { print east;
+  west=9+east;
+  y=east-4;
+  z=west+2;
+  west=9+x*y*z*east+west;
+  while (east < 0) {
+      x = z - east;
+      if (east > x) then {
+         x = x + 1;
+         east = z - 9 + (x * y) * z; }
+      else { y = east * y * z;}}
+ west=9+x*y*z*east+west;
+ print west; 
+ read west; }
+procedure HollandVillage { call Bedok; }
+procedure KentRidge { call HollandVillage; }

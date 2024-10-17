@@ -1,0 +1,25 @@
+1 - Check Follows
+stmt s;
+Select s such that Follows(s,5)
+none
+5000
+2 - Check Follows*
+stmt s;
+Select s such that Follows*(s,3)
+none
+5000
+3 - Check Parent
+stmt s;
+Select s such that Parent(s,3)
+2
+5000
+4 - Check Parent*
+stmt s;
+Select s such that Parent*(s,6)
+2, 4
+5000
+5 - Check Modifies
+stmt s;
+Select s such that Modifies(s,"c")
+2, 4, 7
+5000

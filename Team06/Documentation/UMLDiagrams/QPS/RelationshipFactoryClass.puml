@@ -1,0 +1,38 @@
+@startuml
+
+
+skinparam classAttributeIconSize 0
+
+hide method
+hide attribute
+hide circle
+
+skinparam class {
+    BackgroundColor #F5F2EE
+    ArrowColor #a6a6a6
+    BorderColor #000000
+}
+
+show RelationshipFactory method
+class RelationshipFactory {
++ createRelationship(QueryToken& relTerminal, shared_pt<RelRef>lhs, shared_pt<RelRef>rhs) : Relationship
+- createModifies(shared_pt<RelRef>lhs, shared_pt<RelRef>rhs)
+- createUses(shared_pt<RelRef>lhs, shared_pt<RelRef>rhs)
+}
+
+show Relationship method
+class Relationship {
++ bool isSatisfied(PKBGetter *pkb, assign_t &assign)
+}
+
+class ModifiesS {}
+class UsesS {}
+
+UsesS .up.|> Relationship
+ModifiesS .up.|> Relationship
+
+RelationshipFactory ..> Relationship
+
+
+
+@enduml

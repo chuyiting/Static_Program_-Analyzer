@@ -1,0 +1,148 @@
+@startuml
+skinparam classAttributeIconSize 0
+
+hide circle
+
+skinparam class {
+    BackgroundColor #F5F2EE
+    ArrowColor #a6a6a6
+    BorderColor #000000
+}
+
+'interface PipelineComponent {
+'+ O process(I input);
+'}
+
+'class Parser {
+'- TokenStream tokenStream
+'- int curLineNo
+'
+'+ process(TokenStream) : SourceProgram
+'- expectProgram() : SourceProgram
+'- expectProcedure() : SPProcedure
+'- expectStmt() : SPStatement
+'- expectExpression() : SPExpression
+'
+'}
+
+hide SourceProgram attribute
+class SourceProgram {
++ addProcedure(SPProcedure)
++ hasProcedure(string)
+}
+
+class SPProcedure {
+- string procName
+
++ getProcName(): string
++ getStatementList() : StatementList
+}
+
+hide StatementList attribute
+class StatementList {
++ addStatement(SPStatement)
++ gfetStatements(): vector<SPStatement>
+}
+
+class SPStatement {
+# int baseLineNo
+
++ getBaseLineNo() : int
+}
+
+hide StatementType method
+enum StatementType {
+ASSIGN
+READ
+PRINT
+WHILE
+IF
+CALL
+}
+
+hide WhileStatement method
+class WhileStatement {
+- StatementList body
+}
+
+hide IfStatement method
+class IfStatement {
+- StatementList consequent
+- StatementList alternative
+}
+
+hide ReadStatement method
+class ReadStatement {
+- string varName
+}
+
+hide PrintStatement method
+class PrintStatement {
+- string varName
+}
+
+hide AssignmentStatement method
+ class AssignmentStatement {
+ - string varName
+ }
+
+ hide CallStatement method
+ class CallStatement {
+ - string procedureName
+ - string parentProcedureName
+ }
+
+hide SPExpression method
+class SPExpression {
+- string infixExpression
+- vector<string> constants
+- vector<string> variables
+}
+
+hide ConditionalExpression method
+class ConditionalExpression {
+- string postfixExpression
+- string infixExpression
+- vector<string> constants
+- vector<string> variables
+}
+
+WhileStatement -up-|> SPStatement
+IfStatement -up-|> SPStatement
+ReadStatement -up-|> SPStatement
+PrintStatement -up-|> SPStatement
+AssignmentStatement -up-|> SPStatement
+CallStatement -up-|> SPStatement
+
+IfStatement -down-> ConditionalExpression
+WhileStatement -down-> ConditionalExpression
+
+AssignmentStatement -down-> SPExpression
+
+'Parser -|> PipelineComponent
+'Parser ..> WhileStatement
+'Parser ..> IfStatement
+'Parser ..> ReadStatement
+'Parser ..> PrintStatement
+'Parser ..> AssignmentStatement
+'Parser ..> CallStatement
+'Parser ..> ConditionalExpression
+'Parser ..> SPExpression
+
+SPStatement -> StatementType
+
+StatementList *-- "*" SPStatement
+
+SourceProgram *-- "*" SPProcedure
+SPProcedure --> StatementList
+
+
+'Parser ..> SourceProgram
+'Parser ..> SPProcedure
+'Parser ..> StatementList
+'Parser ..> SPStatement
+
+WhileStatement -> StatementList
+IfStatement --> StatementList
+
+@enduml

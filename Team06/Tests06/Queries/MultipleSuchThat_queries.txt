@@ -1,0 +1,330 @@
+1 - Follows, Parent
+stmt s; assign a;
+Select s such that Follows(s, _) such that Parent(s, a)
+6
+5000
+2 - Follows, Parent*
+stmt s; assign a;
+Select s such that Follows(s, _) such that Parent*(s, a)
+6
+5000
+3 - Follows, Uses
+stmt s; assign a; variable v;
+Select a such that Follows(s, a) such that Uses(a, v)
+2, 3, 4, 5, 10, 12
+5000
+4 - Follows, Modifies
+stmt s; assign a; variable v;
+Select <a, v> such that Follows(s, a) such that Modifies(a, v)
+2 west, 3 y, 4 z, 5 west, 10 east, 12 west
+5000
+5 - Follows, Calls
+stmt s;
+Select s such that Follows(s, _) such that Calls("HollandVillage", "Bedok")
+1, 2, 3, 4, 5, 6, 7, 9, 12, 13
+5000
+6 - Follows, Calls*
+stmt s;
+Select s such that Follows(s, _) such that Calls*("KentRidge", "Bedok")
+1, 2, 3, 4, 5, 6, 7, 9, 12, 13
+5000
+7 - Follows, Next
+stmt s; assign a;
+Select a such that Follows(s, a) such that Next(s, a)
+2, 3, 4, 5, 10, 12
+5000
+8 - Follows, Next*
+stmt s; assign a;
+Select a such that Follows(s, a) such that Next*(s, 5)
+2, 3, 4, 5
+5000
+9 - Follows, Affects
+stmt s; assign a;
+Select a such that Follows(s, a) such that Affects(3, 10)
+2, 3, 4, 5, 10, 12
+5000
+10 - Follows, Affects*
+stmt s; assign a;
+Select a such that Follows(s, a) such that Affects*(3, 12)
+2, 3, 4, 5, 10, 12
+5000
+11 - Follows*, Parent
+stmt s; assign a;
+Select s such that Follows*(s, 12) such that Parent(s, a)
+6
+5000
+12 - Follows*, Parent*
+stmt s; assign a;
+Select s such that Follows*(s, 13) such that Parent*(s, a)
+6
+5000
+13 - Follows*, Uses
+assign a; variable v;
+Select a such that Follows*(3, a) such that Uses(a, v)
+4, 5, 12
+5000
+14 - Follows*, Modifies
+assign a; variable v;
+Select <a, v> such that Follows*(3, a) such that Modifies(a, v)
+4 z, 5 west, 12 west
+5000
+15 - Follows*, Calls
+stmt s;
+Select s such that Follows*(s, 12) such that Calls("HollandVillage", "Bedok")
+1, 2, 3, 4, 5, 6
+5000
+16 - Follows*, Calls*
+stmt s;
+Select s such that Follows*(s, 5) such that Calls*("KentRidge", "Bedok")
+1, 2, 3, 4
+5000
+17 - Follows*, Next
+stmt s; assign a;
+Select a such that Follows*(s, a) such that Next(s, a)
+2, 3, 4, 5, 10, 12
+5000
+18 - Follows*, Next*
+stmt s; assign a;
+Select a such that Follows*(s, a) such that Next*(s, 5)
+2, 3, 4, 5, 12
+5000
+19 - Follows*, Affects
+assign a;
+Select a such that Follows*(3, a) such that Affects(3, 10)
+4, 5, 12
+5000
+20 - Follows*, Affects*
+assign a;
+Select a such that Follows*(5, a) such that Affects*(3, 12)
+12
+5000
+21 - Follows, Follows*
+stmt s; assign a;
+Select a such that Follows(s, a) such that Follows*(2, 4)
+2, 3, 4, 5, 10, 12
+5000
+22 - Parent, Parent*
+stmt s;
+Select s such that Parent(s, 7) such that Parent*(s, 9)
+6
+5000
+23 - Parent, Uses
+stmt s;
+Select s such that Parent(s, 7) such that Uses(s, "east")
+6
+5000
+24 - Parent, Modifies
+stmt s;
+Select s such that Parent(6, 7) such that Modifies(s, "x")
+6, 7, 8, 9, 15, 16
+5000
+25 - Parent, Calls
+stmt s;
+Select s such that Parent(s, 8) such that Calls("KentRidge", "HollandVillage")
+6
+5000
+26 - Parent, Calls*
+stmt s;
+Select s such that Parent(s, 8) such that Calls*("KentRidge", "Bedok")
+6
+5000
+27 - Parent, Next
+stmt s;
+Select s such that Parent(s, 8) such that Next(s, 7)
+6
+5000
+28 - Parent, Next*
+stmt s;
+Select s such that Parent(6, 8) such that Next*(s, 3)
+1, 2
+5000
+29 - Parent, Affects
+stmt s;
+Select s such that Parent(s, 8) such that Affects(3, _)
+6
+5000
+30 - Parent, Affects*
+stmt s;
+Select s such that Parent(s, 8) such that Affects*(3, 12)
+6
+5000
+31 - Parent*, Uses
+stmt s;
+Select s such that Parent*(s, 9) such that Uses(s, "east")
+6, 8
+5000
+32 - Parent*, Modifies
+stmt s;
+Select s such that Parent*(s, 9) such that Modifies(s, "x")
+6, 8
+5000
+33 - Parent*, Calls
+stmt s;
+Select s such that Parent*(s, 10) such that Calls("KentRidge", "HollandVillage")
+6, 8
+5000
+34 - Parent*, Calls*
+stmt s;
+Select s such that Parent*(s, 8) such that Calls*("KentRidge", "Bedok")
+6
+5000
+35 - Parent*, Next
+stmt s;
+Select s such that Parent*(s, 9) such that Next(s, 7)
+6
+5000
+36 - Parent*, Next*
+stmt s;
+Select s such that Parent*(_, 9) such that Next*(s, 8)
+1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11
+5000
+37 - Parent*, Affects
+stmt s;
+Select s such that Parent*(s, 9) such that Affects(3, _)
+6, 8
+5000
+38 - Parent*, Affects*
+stmt s;
+Select s such that Parent*(s, 8) such that Affects*(3, 12)
+6
+5000
+39 - Uses, Modifies
+stmt s; variable v;
+Select s such that Uses(s, v) such that Modifies(3, v)
+5, 6, 8, 10, 11, 12, 15, 16
+5000
+40 - Uses, Calls
+stmt s; variable v;
+Select v such that Uses(5, v) such that Calls("KentRidge", "HollandVillage")
+x, y, z, east, west
+5000
+41 - Uses, Calls*
+stmt s; variable v;
+Select v such that Uses(5, v) such that Calls*("KentRidge", "Bedok")
+x, y, z, east, west
+5000
+42 - Uses, Next
+stmt s; variable v;
+Select v such that Uses(3, v) such that Next(3, 4)
+east
+5000
+43 - Uses, Next*
+stmt s; variable v;
+Select v such that Uses(3, v) such that Next*(3, 5)
+east
+5000
+44 - Uses, Affects
+stmt s; variable v;
+Select v such that Uses(1, v) such that Next(3, 4)
+east
+5000
+45 - Uses, Affects*
+stmt s; variable v;
+Select v such that Uses(2, v) such that Next*(3, 4)
+east
+5000
+46 - Modifies, Calls
+stmt s; variable v;
+Select v such that Modifies(2, v) such that Calls("HollandVillage", "Bedok")
+west
+5000
+47 - Modifies, Calls*
+stmt s; variable v;
+Select v such that Modifies(3, v) such that Calls*("KentRidge", "Bedok")
+y
+5000
+48 - Modifies, Next
+stmt s; variable v;
+Select v such that Modifies(3, v) such that Next(3, 4)
+y
+5000
+49 - Modifies, Next*
+stmt s; variable v;
+Select v such that Modifies(7, v) such that Next*(3, 5)
+x
+5000
+50 - Modifies, Affects
+stmt s; variable v;
+Select v such that Modifies(3, v) such that Affects(3, 10)
+y
+5000
+51 - Modifies, Affects*
+stmt s; variable v;
+Select v such that Modifies(3, v) such that Affects*(3, 12)
+y
+5000
+52 - Calls, Calls*
+procedure p;
+Select p such that Calls(p, "HollandVillage") such that Calls*(p, "Bedok")
+KentRidge
+5000
+53 - Calls, Next
+procedure p; stmt s;
+Select s such that Calls(p, "HollandVillage") such that Next(3, s)
+4
+5000
+54 - Calls, Next*
+procedure p; stmt s;
+Select s such that Calls(p, "HollandVillage") such that Next*(5, s)
+6, 7, 8, 9, 10, 11, 12, 13, 14
+5000
+55 - Calls, Affects
+procedure p; stmt s;
+Select p such that Calls(p, "HollandVillage") such that Affects(4, 7)
+KentRidge
+5000
+56 - Calls, Affects*
+procedure p; stmt s;
+Select p such that Calls(p, "HollandVillage") such that Affects*(4, 12)
+KentRidge
+5000
+57 - Calls*, Next
+procedure p; stmt s;
+Select p such that Calls*(p, "Bedok") such that Next(3, s)
+KentRidge, HollandVillage
+5000
+58 - Calls*, Next*
+procedure p; stmt s;
+Select s such that Calls*(p, "Bedok") such that Next*(s, 3)
+1, 2
+5000
+59 - Calls*, Affects
+procedure p; stmt s;
+Select s such that Calls*(p, "Bedok") such that Affects(s, 7)
+4, 10
+5000
+60 - Calls*, Affects*
+procedure p; stmt s;
+Select p such that Calls*(p, "Bedok") such that Affects*(4, 12)
+KentRidge, HollandVillage
+5000
+61 - Next, Next*
+stmt s;
+Select s such that Next(s, 3) such that Next*(s, 3)
+2
+5000
+62 - Next, Affects
+stmt s;
+Select s such that Next(s, 5) such that Affects(s, 7)
+4
+5000
+63 - Next, Affects*
+stmt s;
+Select s such that Next(s, 5) such that Affects*(s, 12)
+4
+5000
+64 - Next*, Affects
+stmt s;
+Select s such that Next*(s, 5) such that Affects(_, 7)
+1, 2, 3, 4
+5000
+65 - Next*, Affects*
+stmt s;
+Select s such that Next*(6, s) such that Affects*(4, 7)
+6, 7, 8, 9, 10, 11, 12, 13, 14
+5000
+66 - Affects, Affects*
+stmt s;
+Select s such that Affects(s, 7) such that Affects*(s, 12)
+4, 10
+5000

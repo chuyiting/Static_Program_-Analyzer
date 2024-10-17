@@ -1,0 +1,25 @@
+1 - missing semicolon for synonym declarations
+variable v
+Select v
+SyntaxError
+5000
+2 - Uppercase V for variable declaration
+Variable v;
+Select v
+SyntaxError 
+5000
+3 - Unknown keyword var
+var v;
+Select v
+SyntaxError
+5000
+4 - Repeated synonym declaration
+variable v;variable v;
+Select v
+SyntaxError
+5000
+5 - Missing synonym declaration
+
+Select v
+SemanticError
+5000
