@@ -16,7 +16,7 @@ No additional instructions required.
 
 ## Documentation
 
-A detailed documentation can be found [here] (https://docs.google.com/document/d/1SRCVml7XTLgjKPtqwORsy0jrH8ELJlaC3bcPHpg20mU/edit?usp=sharing)
+A detailed documentation can be found [here](https://docs.google.com/document/d/1SRCVml7XTLgjKPtqwORsy0jrH8ELJlaC3bcPHpg20mU/edit?usp=sharing)
 
 # Team Members
 
